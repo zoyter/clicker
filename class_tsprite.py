@@ -41,15 +41,19 @@ class TSprite(pyg.sprite.Sprite):
     def render(self):
         """ Отрисовка спрайта
         """
-        x = self.rect.x
-        y = self.rect.y
-        self.screen.blit(self.image,[x,y])
+        # рисуем сам спрайт
+        self.screen.blit(self.image,[self.rect.x,self.rect.y])
+        # рисуем его жизни
         self.print_life()
 
     def update(self):
         """ Обновление состояния спрайта
             например, можно его тут подвигать и т.п.
         """
+        # Это переменная в которой будет храниться результат анализа
+        # r=0, значит, никто не наехал на спрайт и спрайт не улетел за границы окна
+        # r=1, значит, на спрайт наехали мышкой
+        # r=-1, значит, спрайт улетел за границы окна
         r = 0
         self.rect.y -= 5
         if self.isClicked() == True:
@@ -64,17 +68,20 @@ class TSprite(pyg.sprite.Sprite):
             
 
     def isClicked(self):
-        """ Попали мышкой по спрайту?
+        """ Наехали мышкой на спрайт?
         """
+        # Считаем, что не наехали
         flag = False
-        
+        # Получаем координаты мыши
         pos = pyg.mouse.get_pos()
+        # Смотрим попал-ли курсор в спрайт
         lb = pos[0] >= self.rect.x
         rb = pos[0] <= self.rect.x+ self.rect.width
         tb = pos[1] >= self.rect.y
         bb = pos[1] <= self.rect.y+ self.rect.height        
-            
+        # Если попал, то    
         if lb and rb and tb and bb:
+            # поднимает флаг того, что наехали на спрайт мышкой
             flag = True
-
+        # возвращаем флаг
         return flag

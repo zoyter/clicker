@@ -21,6 +21,9 @@ def loadimg(fname):
     return img, img.get_rect()
 
 def rndcolor():
+    """ Генератор случайного цвета
+        Выход: случайный цвет в формате (R,G,B)
+    """
     r = rnd.randint(0, 255)
     g = rnd.randint(0, 255)
     b = rnd.randint(0, 255)
